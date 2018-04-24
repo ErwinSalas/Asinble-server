@@ -1,4 +1,6 @@
-## Customize dependencies
-dependencies:
-  pre:
-    - npm install coffeescript # install from a different package manager
+- hosts: all
+  tasks:
+  - name: make sure apache is running
+    service:
+      name: httpd
+      state: started
