@@ -9,9 +9,9 @@ from ansible.executor.playbook_executor import PlaybookExecutor
 
 loader = DataLoader()
 
-inventory = InventoryManager(loader=loader, sources='/home/slotlocker/hosts2')
+inventory = InventoryManager(loader=loader, sources='/home/erwin-salas/Documentos/GitHub/Asinble-server/Inventory/inventory')
 variable_manager = VariableManager(loader=loader, inventory=inventory)
-playbook_path = '/home/slotlocker/ls.yml'
+playbook_path = '/home/erwin-salas/Documentos/GitHub/Asinble-server/Playbooks/playbook.yml'
 
 if not os.path.exists(playbook_path):
     print('[INFO] The playbook does not exist')
