@@ -1,6 +1,19 @@
-- hosts: all
+- name: Prueba
+  hosts: 172.24.181.249
+  gather_facts: no
   tasks:
   - name: make sure apache is running
-    service:
-      name: httpd
-      state: started
+    apt: name=apche2 update_cache=yes state=lastest
+
+
+#- hosts: all
+# gather_facts: no
+#  tasks:
+#    - name: Installs nginx web server
+#      apt: pkg=nginx state=installed update_cache=true
+#      notify:
+#        - start nginx
+
+#  handlers:
+#    - name: start nginx
+#      service: name=nginx state=started
