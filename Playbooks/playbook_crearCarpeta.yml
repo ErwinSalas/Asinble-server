@@ -1,0 +1,9 @@
+- name: crear carpeta
+  hosts: all
+  gather_facts: no
+  sudo: no
+  tasks:
+  - name: ansible create directory example
+    file:
+      path: "{{path}}"
+      state: directory

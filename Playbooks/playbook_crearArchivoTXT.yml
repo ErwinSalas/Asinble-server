@@ -1,0 +1,9 @@
+- name: crear archivo txt
+  hosts: all
+  gather_facts: no
+  sudo: no
+  tasks:
+  - name: Create file
+    file:
+      path: "{{path}}"
+      state: touch

@@ -1,6 +1,32 @@
-- hosts: all
+- name: Prueba
+  hosts: all
+  gather_facts: no
+  sudo: no
   tasks:
-  - name: make sure apache is running
-    service:
-      name: httpd
-      state: started
+  - name: Clean artifact path
+    file:
+      state: absent
+      path: "{{path}}"
+
+
+#- hosts: all
+#  remote_user: labicsc02-65961
+#  sudo: no
+#  tasks:
+#    - service:
+#        name: nginx
+#        state: started
+#      become: yes
+#      become_method: sudo
+
+#- hosts: all
+# gather_facts: no
+#  tasks:
+#    - name: Installs nginx web server
+#      apt: pkg=nginx state=installed update_cache=true
+#      notify:
+#        - start nginx
+
+#  handlers:
+#    - name: start nginx
+#      service: name=nginx state=started

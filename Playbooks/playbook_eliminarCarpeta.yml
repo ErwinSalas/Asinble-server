@@ -1,0 +1,9 @@
+- name: eliminar carpeta
+  hosts: all
+  gather_facts: no
+  sudo: no
+  tasks:
+  - name: Clean artifact path
+    file:
+      state: absent
+      path: "{{path}}"
