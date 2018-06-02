@@ -108,18 +108,18 @@
         <div class="nav-wrapper color-main">
           <a href="#" class="brand-logo" style="margin-left:3%;">Ansible</a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="/">Tareas</a></li>
-                <li><a href="/history">Historial</a></li>
+                <li><a href="/index">Tareas</a></li>
+                <li><a href="/obtenerHistorial">Historial</a></li>
           </ul>
         </div>
     </nav>
 
     <div id="bg">
       <div class="module">
-        <form class="form">
+        <form class="form" method="post" action="http://127.0.0.1:8090/ansible">
           <h3 style="text-align: center; ">Tareas</h3>
           <div class="input-field col s12" style="margin-left: 10%; margin-right: 10%; margin-top: 15%">
-            <select id="selectTarea" style="display: block;">
+            <select id="selectTarea" name="selectTarea" style="display: block;">
                 <option value="" disabled selected>Seleccione la tarea a realizar</option>
                 <option value="crearArchivoTXT">Crear archivo Txt</option>
                 <option value="crearCarpeta">Crear carpeta nueva</option>
@@ -130,10 +130,11 @@
             </select>
           </div>
           <div class="input-field col s6" style="margin-top:15%">
-              <input id="nombreElemento" type="text" class="validate">
+              <input name="nombreElemento" id="nombreElemento" type="text" class="validate">
               <label class="active" for="nombreElemento">Nombre de archivo/carpeta:</label>
           </div>
-          <input type="button" value="REALIZAR" class="button" />
+            <button id="email_inline" type="submit" class="button">REALIZAR</button>
+
         </form>
       </div>
     </div>

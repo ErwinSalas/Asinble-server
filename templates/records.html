@@ -15,16 +15,15 @@
     </style>
 </head>
 <body>
- <nav>
-    <div class="nav-wrapper color-main">
-      <a href="#" class="brand-logo" style="margin-left:3%;">Ansible</a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="">Instalar</a></li>
-        <li><a href="">Modificar</a></li>
-        <li><a href="">Eliminar</a></li>
-      </ul>
-    </div>
-  </nav>
+     <nav>
+        <div class="nav-wrapper color-main">
+          <a href="#" class="brand-logo" style="margin-left:3%;">Ansible</a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="/index">Tareas</a></li>
+                <li><a href="/obtenerHistorial">Historial</a></li>
+          </ul>
+        </div>
+    </nav>
     <div class="container" style="margin-top:10%">
       <table class="striped highlight centered">
         <thead>
@@ -38,7 +37,7 @@
             {%for result in lista%}
               <tr>
                 <td><p>{{result.id}}</p></td>
-                <td><p>{{result.TipoPeticionRealizada}}</p></td>
+                <td><p>{{result.tipoPeticionRealizada}}</p></td>
                 <td><p>{{result.fechaPeticion}}</p></td>
               </tr>
             {% endfor %}

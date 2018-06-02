@@ -19,8 +19,54 @@ from werkzeug.utils import secure_filename
 import os
 from flask import send_from_directory
 
+import Models
+
 peticion = 'eliminarCarpeta'
-nombre_path = '/home/labicsc02-65961/Documentos/carpeta'
+nombre_path = ''
+path= "/home/labicsc02-65961/Documentos/"
+
+
+#clases
+
+class Historial:
+    def __init__(self, id, tipoPeticionRealizada, fechaPeticion):
+        self.id = id
+        self.tipoPeticionRealizada = tipoPeticionRealizada
+        self.fechaPeticion = fechaPeticion
+
+    def getId(self):
+        return self.id
+    def setId(self, nuevo):
+        self.id = nuevo
+
+    def getTipopeticionRealizada(self):
+        return self.tipoPeticionRealizada
+    def setTipoPeticionRealizada(self, nuevo):
+        self.tipoPeticionRealizada = nuevo
+
+    def getFechaPeticion(self):
+        return self.fechaPeticion
+    def setFechaPeticion(self, nuevo):
+        self.fechaPeticion = nuevo
+
+
+class Usuario:
+    usuario = None
+
+    def __init__(self, nombreUsuario, contrasenna, rol):
+        self.nombreUsuario = nombreUsuario
+        self.contrasenna = contrasenna
+        self.rol = rol
+
+    def getInstancia(self, nombreUsuario, contrasenna, rol):
+        global usuario
+        if usuario == None:
+            usuario = Usuario(self, nombreUsuario, contrasenna, rol)
+            return usuario
+        else:
+            return usuario
+
+
 
 
 def ansibleFuntion():
@@ -85,13 +131,98 @@ app = Flask(__name__)
 #RUTAS DE VISTAS
 
 #------------------------------------------------------------------------------------------
-@app.route('/index')
-def indexPage():
-    return render_template('index.html')
 
-@app.route('/history')
-def historyPage():
-    return render_template('records.html')
+
+@app.route('/')
+def login():
+    return render_template('login.html')
+
+
+@app.route('/obtenerHistorial',methods=['GET','POST'])
+def obtenerHistorial():
+    lista = []
+    session= Models.Session.getInstance()
+    nombreUsuario=session.getlogedUser().nombreUsuario
+
+    if request.method == 'GET':
+        cursorRegistros = cnx.cursor()
+        query = "SELECT h.id, h.tipoPeticionRealizada, h.fechaPeticion " \
+                "FROM Historial as h inner join Usuario_Historial as uh " \
+                "where h.id=uh.id_historial and uh.nombre_usuario = '" + nombreUsuario + "'"
+
+        cursorRegistros.execute(query)
+        fila = cursorRegistros.fetchall()
+        for item in fila:
+            idHistorial = str(item[0])
+            tareaHistorial = str(item[1])
+            fechaHistorial = str(item[2])
+            historialElement = Historial(idHistorial,tareaHistorial,fechaHistorial)
+            lista.append(historialElement)
+        #return str(len(fila))
+        return render_template('records.html', lista = lista)
+
+
+@app.route('/index')
+def index():
+    session = Models.Session.getInstance()
+    tipo_usuario = session.getlogedUser().rol
+    nombreUsuario = session.getlogedUser().nombreUsuario
+    return render_template('index.html', tipo_usuario=tipo_usuario, nombreUsuario=nombreUsuario)
+
+
+
+@app.route('/login', methods=['POST'])
+def dbLogin():
+
+    user = request.form['email']
+    password = request.form['password']
+
+    cursorRegistros = cnx.cursor()
+    query = "SELECT * from Usuario"
+
+    cursorRegistros.execute(query)
+    fila = cursorRegistros.fetchall()
+    for item in fila:
+
+        if str(item[0]) == user and str(item[1]) == password:
+            nombreUsuario = str(item[0])
+            contrasenna = str(item[1])
+            rol = str(item[2])
+            session=Models.Session.getInstance()
+            usuario =Usuario(nombreUsuario, contrasenna, rol)
+            session.logUser(usuario)
+
+
+            return render_template('index.html',tipo_usuario=rol,nombreUsuario= nombreUsuario)
+
+
+    return render_template('error.html')
+
+
+@app.route('/ansible', methods=['POST'])
+def ansible():
+    global peticion
+    global nombre_path
+    global path
+
+    tipoPeticion = request.form['selectTarea']
+    nombreArchivo = request.form['nombreElemento']
+
+    session = Models.Session.getInstance()
+    nombreUsuario = session.getlogedUser().nombreUsuario
+
+    peticion= tipoPeticion
+    nombre_path= path+nombreArchivo
+
+    ansibleFuntion()
+
+    cursor = cnx.cursor()
+    cursor.callproc("Insertar_Historial_Procedimiento",
+                    args=(str(tipoPeticion), str(nombreUsuario)))
+    cnx.commit()
+
+    return render_template('success.html')
+
 
 
 if __name__ == '__main__':
