@@ -14,7 +14,7 @@ from ansible.executor.playbook_executor import PlaybookExecutor
 #FLASK
 
 from flask import Flask, request, render_template,redirect,url_for
-#import mysql.connector
+import mysql.connector
 from werkzeug.utils import secure_filename
 import os
 from flask import send_from_directory
@@ -75,12 +75,11 @@ def ansibleFuntion():
 
 
 
-#cnx = mysql.connector.connect(user='root', password='123',
-#                              host='127.0.0.1',
-#                              database='ansibleBase')
+cnx = mysql.connector.connect(user='root', password='123',
+                              host='127.0.0.1',
+                              database='ansibleBase')
 
 app = Flask(__name__)
-#----------------------------------------------------------------------------------------
 
 #START
 #RUTAS DE VISTAS
@@ -90,27 +89,13 @@ app = Flask(__name__)
 def indexPage():
     return render_template('index.html')
 
-@app.route('/')
-def login():
-    return render_template('login.html')
-#----------------------------------------------------------------------------------------
-
-#END
-#RUTAS DE VISTAS
-
-
-#------------------------------------------------------------------------------------------
-@app.route('/login', methods=['POST'])
-def doLogin():
-
-
-
-    return render_template('test_result.html', results=conection.connection(ob))
-
+@app.route('/history')
+def historyPage():
+    return render_template('records.html')
 
 
 if __name__ == '__main__':
     app.run(port=8090, debug=True)
 
 
-#cnx.close()
+cnx.close()
