@@ -26,6 +26,11 @@ def indexPage():
     return render_template('index.html')
 
 
+@app.route('/table')
+def indexTable():
+    return render_template('records.html')
+
+
 @app.route('/login', methods=['GET','POST'])
 def login():
 
