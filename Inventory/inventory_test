@@ -1,0 +1,4 @@
+172.24.181.249
+ansible_connection=ssh
+ansible_ssh_user=labicsc02-65961
+ansible_ssh_pass=adminlabicssc2018

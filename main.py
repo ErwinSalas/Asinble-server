@@ -9,6 +9,7 @@ from ansible.executor.playbook_executor import PlaybookExecutor
 
 loader = DataLoader()
 
+
 inventory = InventoryManager(loader=loader, sources='/home/labicsc02-65961/Documentos/Asinble-server/Inventory/inventory')
 variable_manager = VariableManager(loader=loader, inventory=inventory)
 
@@ -33,7 +34,6 @@ elif(peticion == 'crearCarpeta'):
 if not os.path.exists(playbook_path):
     print('[INFO] The playbook does not exist')
     sys.exit()
-
 
 Options = namedtuple('Options', ['listtags', 'listtasks', 'listhosts', 'syntax',
                                  'connection','module_path', 'forks', 'remote_user',
