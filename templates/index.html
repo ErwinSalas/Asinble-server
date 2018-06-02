@@ -119,17 +119,19 @@
         <form class="form">
           <h3 style="text-align: center; ">Tareas</h3>
           <div class="input-field col s12" style="margin-left: 10%; margin-right: 10%; margin-top: 15%">
-            <select style="display: block;">
+            <select id="selectTarea" style="display: block;">
                 <option value="" disabled selected>Seleccione la tarea a realizar</option>
-                <option value="1">Crear archivo Txt</option>
-                <option value="2">Crear carpeta nueva</option>
-                <option value="3">Eliminar carpteta </option>
-                <option value="4">Eliminar archivo </option>
+                <option value="crearArchivoTXT">Crear archivo Txt</option>
+                <option value="crearCarpeta">Crear carpeta nueva</option>
+                {% if tipo_usuario == "Administrador" %}
+                    <option value="eliminarArchivo">Eliminar archivo </option>
+                    <option value="eliminarCarpeta">Eliminar carpteta </option>
+                {% endif %}
             </select>
           </div>
           <div class="input-field col s6" style="margin-top:15%">
-              <input id="first_name2" type="text" class="validate">
-              <label class="active" for="first_name2">Nombre de archivo/carpeta:</label>
+              <input id="nombreElemento" type="text" class="validate">
+              <label class="active" for="nombreElemento">Nombre de archivo/carpeta:</label>
           </div>
           <input type="button" value="REALIZAR" class="button" />
         </form>
