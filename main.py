@@ -85,6 +85,9 @@ app = Flask(__name__)
 def indexPage():
     return render_template('index.html')
 
+@app.route('/history')
+def historyPage():
+    return render_template('records.html')
 
 
 if __name__ == '__main__':
