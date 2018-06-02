@@ -22,8 +22,8 @@ cnx = mysql.connector.connect(user='root', password='123',
 app = Flask(__name__)
 
 @app.route('/')
-def index():
-    return "working!"
+def indexPage():
+    return render_template('index.html')
 
 
 @app.route('/login', methods=['GET','POST'])
